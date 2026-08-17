@@ -23,9 +23,15 @@ STATIC_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title="Shri Shyam Sundar - Vastra Bhandar API")
 
+raw_origins = getattr(settings, "FRONTEND_ORIGIN", "*")
+if isinstance(raw_origins, str):
+    allowed_origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+else:
+    allowed_origins = raw_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_ORIGIN],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
