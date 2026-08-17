@@ -2,11 +2,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    
     DB_HOST: str = "localhost"
     DB_PORT: int = 3306
     DB_USER: str = "root"
     DB_PASSWORD: str = ""
     DB_NAME: str = "shop"
+    DB_SSL_CA: str = ""
 
     
     JWT_SECRET_KEY: str = "change_this_to_a_long_random_string"
@@ -24,11 +26,14 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL(self) -> str:
-        # pymysql driver, matches the original PHP PDO mysql: host=localhost;dbname=shop
         return (
             f"mysql+pymysql://{self.DB_USER}:{self.DB_PASSWORD}"
             f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
         )
+
+    @property
+    def uses_ssl(self) -> bool:
+        return bool(self.DB_SSL_CA)
 
 
 settings = Settings()
