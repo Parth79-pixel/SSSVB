@@ -1,11 +1,25 @@
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.database import create_db_and_tables
-from app.routers import auth, categories, customers, products, invoices, dashboard, reports
+from app.routers import (
+    auth,
+    categories,
+    customers,
+    dashboard,
+    invoices,
+    products,
+    reports,
+)
 from app.routers import settings as settings_router
+
+BASE_DIR = Path(__file__).resolve().parent
+
+STATIC_DIR = BASE_DIR / "static"
+STATIC_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title="Shri Shyam Sundar - Vastra Bhandar API")
 
@@ -17,8 +31,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 app.include_router(auth.router)
 app.include_router(categories.router)
