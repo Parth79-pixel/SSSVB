@@ -1,0 +1,78 @@
+:root {
+  --gold: #d4af37;
+  --gold-light: #f1c65b;
+  --navy-dark: #08202c;
+  --navy-mid: #0c2e3d;
+
+  --text-light: #ddd;
+  --text-muted: #aaa;
+  --text-faint: #888;
+
+  --success: #28a745;
+  --success-alt: #25d366;
+  --danger: #ff4d4d;
+  --danger-strong: #ff1a1a;
+  --warning: #ffc107;
+  --info: #2d9cdb;
+  --purple: #9b51e0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background: linear-gradient(135deg, #0f2027, #1c3a4f, #2c5364);
+  color: white;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 10px;
+}
+
+.btn-gold-gradient {
+  background: linear-gradient(45deg, var(--gold), var(--gold-light));
+  color: black;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-gold-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+}
+
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--text-light);
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+  --bs-table-striped-color: var(--text-light);
+  --bs-table-hover-bg: rgba(212, 175, 55, 0.08);
+  --bs-table-hover-color: #fff;
+  --bs-table-border-color: rgba(255, 255, 255, 0.08);
+}
+
+.table tbody tr {
+  background-color: transparent;
+}
+
+.form-select option {
+  background-color: #1c2e3a;
+  color: #ddd;
+}

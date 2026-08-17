@@ -1,0 +1,137 @@
+.text-muted-custom {
+  color: var(--text-faint);
+}
+
+.text-gold {
+  color: var(--gold-light);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.text-gold:hover {
+  text-decoration: underline;
+}
+
+.text-danger-custom {
+  color: var(--danger);
+}
+
+.stat-card {
+  padding: 20px;
+  border-radius: 18px;
+  height: 100%;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 24px;
+  color: #fff;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.stat-blue {
+  background: linear-gradient(135deg, rgba(45, 156, 219, 0.15), rgba(45, 156, 219, 0.05));
+  border: 1px solid rgba(45, 156, 219, 0.3);
+}
+.stat-blue .stat-label {
+  color: var(--info);
+}
+
+.stat-orange {
+  background: linear-gradient(135deg, rgba(242, 153, 74, 0.15), rgba(242, 153, 74, 0.05));
+  border: 1px solid rgba(242, 153, 74, 0.3);
+}
+.stat-orange .stat-label {
+  color: #f2994a;
+}
+
+.stat-purple {
+  background: linear-gradient(135deg, rgba(155, 81, 224, 0.15), rgba(155, 81, 224, 0.05));
+  border: 1px solid rgba(155, 81, 224, 0.3);
+}
+.stat-purple .stat-label {
+  color: var(--purple);
+}
+
+.stat-red {
+  background: linear-gradient(135deg, rgba(235, 87, 87, 0.15), rgba(235, 87, 87, 0.05));
+  border: 1px solid rgba(235, 87, 87, 0.3);
+}
+.stat-red .stat-label {
+  color: var(--danger);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 25px;
+}
+
+.table-head-row th {
+  color: var(--text-faint);
+  font-size: 12px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table td {
+  color: #ddd;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.badge-partial {
+  color: #f2994a;
+  font-size: 11px;
+  background: rgba(242, 153, 74, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.badge-paid {
+  color: var(--info);
+  font-size: 11px;
+  background: rgba(45, 156, 219, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+@media (max-width: 575.98px) {
+  .stat-value {
+    font-size: 20px;
+  }
+}
+
+.category-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  color: #fff;
+  border-radius: 10px;
+}
+.category-input:focus {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--gold);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  color: #fff;
+}
+
+.category-submit-btn {
+  padding: 6px 18px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.category-success {
+  color: var(--success);
+  font-size: 13px;
+}
+.category-error {
+  color: var(--danger);
+  font-size: 13px;
+}

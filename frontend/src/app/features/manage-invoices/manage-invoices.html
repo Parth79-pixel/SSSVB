@@ -1,0 +1,107 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+  <h2 class="section-title mb-0">📄 Manage Invoices</h2>
+</div>
+
+<div class="glass-panel">
+  <div class="table-responsive">
+    <table class="table invoice-table align-middle">
+      <thead>
+        <tr>
+          <th>Inv #</th>
+          <th>Customer</th>
+          <th>Mobile</th>
+          <th>Total</th>
+          <th>Paid</th>
+          <th>Balance</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inv of invoices">
+          <td class="inv-id">#{{ inv.id }}</td>
+          <td>{{ inv.customer_name }}</td>
+          <td>{{ inv.customer_mobile }}</td>
+          <td>₹ {{ inv.final_amount | number: '1.2-2' }}</td>
+          <td class="text-success-custom">₹ {{ inv.amount_paid | number: '1.2-2' }}</td>
+          <td class="text-danger-custom">₹ {{ inv.balance_due | number: '1.2-2' }}</td>
+          <td>
+            <span class="badge-status" [ngClass]="statusClass(inv.status)">{{ inv.status }}</span>
+          </td>
+          <td class="text-muted-custom">{{ inv.created_at | date: 'd MMM y' }}</td>
+          <td class="text-end text-nowrap">
+            <a [href]="'/invoice-view/' + inv.id" target="_blank" class="btn view-btn btn-sm me-1">
+              View
+            </a>
+            <button
+              class="btn wa-btn btn-sm me-1"
+              [disabled]="sendingWhatsappId === inv.id"
+              (click)="sendWhatsapp(inv)"
+            >
+              {{ sendingWhatsappId === inv.id ? '...' : 'WA' }}
+            </button>
+            <button class="btn edit-btn btn-sm me-1" (click)="openEdit(inv)">Edit</button>
+            <button class="btn delete-btn btn-sm" (click)="confirmDelete(inv)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && invoices.length === 0">
+          <td colspan="9" class="text-center text-muted-custom py-4">No invoices found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="edit-overlay" *ngIf="editingId" (click)="closeEdit()"></div>
+<div class="edit-panel" [class.active]="editingId">
+  <div class="edit-content" *ngIf="editingId">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="mb-0">Edit Invoice #{{ editingId }}</h5>
+      <button class="btn close-edit" (click)="closeEdit()">✕</button>
+    </div>
+    <form (ngSubmit)="onEditSubmit()" class="d-flex flex-column gap-3">
+      <input type="text" class="form-control" [(ngModel)]="editForm.customer_name" name="customer_name" placeholder="Customer Name" />
+      <input type="text" class="form-control" [(ngModel)]="editForm.customer_mobile" name="customer_mobile" placeholder="Mobile" />
+      <select class="form-select" [(ngModel)]="editForm.status" name="status">
+        <option value="Paid">Paid</option>
+        <option value="Unpaid">Unpaid</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      <div>
+        <label class="form-label small text-muted-custom">Amount Paid</label>
+        <input
+          type="number"
+          step="0.01"
+          class="form-control"
+          [(ngModel)]="editForm.amount_paid"
+          name="amount_paid"
+          (ngModelChange)="onAmountPaidChanged()"
+        />
+      </div>
+      <div>
+        <label class="form-label small text-muted-custom">Balance Due</label>
+        <input
+          type="number"
+          step="0.01"
+          class="form-control"
+          [(ngModel)]="editForm.balance_due"
+          name="balance_due"
+          (ngModelChange)="onBalanceDueChanged()"
+        />
+      </div>
+      <button type="submit" class="btn btn-gold-gradient">Save Changes</button>
+    </form>
+  </div>
+</div>
+
+<div class="delete-modal" [class.active]="deleteTarget">
+  <div class="delete-modal-content" *ngIf="deleteTarget as inv">
+    <h3>🗑 Delete Invoice #{{ inv.id }}?</h3>
+    <p>Stock for its items will be restored. This action cannot be undone.</p>
+    <div class="d-flex justify-content-center gap-3">
+      <button class="btn cancel-btn" (click)="cancelDelete()">Cancel</button>
+      <button class="btn confirm-delete-btn" (click)="onConfirmDelete()">Yes, Delete</button>
+    </div>
+  </div>
+</div>

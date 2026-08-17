@@ -1,0 +1,47 @@
+<div class="login-page d-flex align-items-center justify-content-center min-vh-100 px-3">
+  <div class="login-card p-4 p-md-5 w-100">
+    <div class="text-center mb-4">
+      <img src="/images/logo-png.png" alt="Shri Shyam Sundar Logo" class="login-logo mb-3" />
+      <p class="subtitle mb-0">Shri Sham Sundar Vastra Bhandar</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-3">
+        <label class="form-label">Email Address</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="name@example.com"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            class="form-control"
+            formControlName="password"
+            placeholder="••••••••"
+          />
+          <button class="btn eye-btn" type="button" (click)="togglePassword()">
+            👁
+          </button>
+        </div>
+      </div>
+
+      
+
+      <button type="submit" class="btn btn-login w-100" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Authenticating...' : 'Login to Dashboard' }}
+      </button>
+
+      <div class="error-msg mt-3" *ngIf="errorMessage">⚠ {{ errorMessage }}</div>
+    </form>
+
+    <div class="footer text-center mt-4">
+      © 2023 Shri Sham Sundar Vastra Bhandar. All Rights Reserved.
+    </div>
+  </div>
+</div>

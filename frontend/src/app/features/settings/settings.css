@@ -1,0 +1,88 @@
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.text-muted-custom {
+  color: var(--text-faint);
+}
+.text-gold {
+  color: var(--gold);
+}
+
+.not-configured-box {
+  background: rgba(255, 193, 7, 0.08);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 16px;
+  padding: 25px;
+  color: #fff;
+}
+.not-configured-box code {
+  color: var(--gold-light);
+}
+
+.alert-success {
+  background: rgba(39, 174, 96, 0.1);
+  color: #27ae60;
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(39, 174, 96, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 25px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: var(--gold);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.form-label {
+  display: block;
+  color: var(--text-faint);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 15px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+}
+.form-control:focus {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.05);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+  outline: none;
+}
+
+.note-box {
+  background: rgba(212, 175, 55, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px dashed rgba(212, 175, 55, 0.3);
+  margin-top: 10px;
+  font-size: 12px;
+  color: #aaa;
+  line-height: 1.5;
+}

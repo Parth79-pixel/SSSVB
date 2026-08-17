@@ -1,0 +1,187 @@
+.section-title {
+  font-size: 22px;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.sub-title {
+  font-size: 16px;
+  color: var(--gold-light);
+}
+
+.text-muted-custom {
+  color: var(--text-faint);
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  backdrop-filter: blur(10px);
+  height: 100%;
+}
+.stat-card h3 {
+  font-size: 24px;
+  color: var(--gold-light);
+}
+.stat-card p {
+  font-size: 13px;
+  color: #ccc;
+  margin: 0;
+}
+
+.form-section {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.form-control {
+  height: 50px;
+  border-radius: 14px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ddd;
+}
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+  color: #fff;
+}
+
+.search-box {
+  max-width: 280px;
+}
+
+.table-section {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.customer-table th {
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--gold-light);
+  padding: 12px;
+  white-space: nowrap;
+}
+.customer-table td {
+  color: #ddd;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wa-btn {
+  background: rgba(37, 211, 102, 0.1);
+  color: var(--success-alt);
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  font-size: 12px;
+}
+.wa-btn:hover {
+  background: var(--success-alt);
+  color: #fff;
+}
+
+.edit-btn {
+  background: linear-gradient(45deg, #1f3a4a, #2c5364);
+  color: white;
+  font-size: 12px;
+}
+.delete-btn {
+  background: var(--danger);
+  color: white;
+  font-size: 12px;
+}
+
+.edit-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1060;
+}
+.edit-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 420px;
+  height: 100vh;
+  background: rgba(8, 32, 44, 0.97);
+  backdrop-filter: blur(15px);
+  border-left: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+  transition: 0.4s ease;
+  z-index: 1070;
+  overflow-y: auto;
+}
+.edit-panel.active {
+  right: 0;
+}
+.edit-content {
+  padding: 30px;
+}
+.close-edit {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--gold-light);
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+.cancel-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: transparent;
+  color: #ddd;
+}
+
+.delete-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 1080;
+}
+.delete-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+.delete-modal-content {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  text-align: center;
+  width: 90%;
+  max-width: 350px;
+}
+.delete-modal-content h3 {
+  color: var(--gold-light);
+  margin-bottom: 10px;
+}
+.delete-modal-content p {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+.confirm-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(45deg, var(--gold), var(--gold-light));
+  color: black;
+  font-weight: 600;
+}
+.edit-content h5 {
+  color: #fff;
+}

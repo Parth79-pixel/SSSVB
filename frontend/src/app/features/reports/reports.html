@@ -1,0 +1,63 @@
+<div *ngIf="loading" class="text-center text-white-50 py-5">Loading reports...</div>
+
+<div *ngIf="!loading">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <div>
+      <h1 class="page-title mb-0">Business Analytics</h1>
+      <p class="text-muted-custom mb-0">Performance Reports &amp; Insights</p>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4" *ngIf="summary as s">
+    <div class="col-6 col-md-3">
+      <div class="glass-card">
+        <span class="stat-label">Total Billed</span>
+        <div class="stat-value">₹{{ s.total_revenue | number: '1.2-2' }}</div>
+        <span class="growth-tag tag-gold">{{ s.total_invoices }} Invoices</span>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="glass-card">
+        <span class="stat-label">Amount Received</span>
+        <div class="stat-value text-success-custom">₹{{ s.total_paid | number: '1.2-2' }}</div>
+        <span class="growth-tag tag-green">Actual Cash Flow</span>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="glass-card">
+        <span class="stat-label">Pending Balance</span>
+        <div class="stat-value text-danger-custom">₹{{ s.pending_amount | number: '1.2-2' }}</div>
+        <span class="growth-tag tag-red">Outstanding Debt</span>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="glass-card">
+        <span class="stat-label">Monthly Growth</span>
+        <div class="stat-value">₹{{ s.this_month_revenue | number: '1.2-2' }}</div>
+        <span class="growth-tag" [class.tag-green]="s.growth_percent >= 0" [class.tag-red]="s.growth_percent < 0">
+          {{ s.growth_percent >= 0 ? '↑' : '↓' }} {{ s.growth_percent < 0 ? -s.growth_percent : s.growth_percent }}%
+          vs last month
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-7">
+      <div class="glass-card chart-card">
+        <h5 class="mb-4">Revenue Velocity (Last 7 Days)</h5>
+        <div class="chart-wrapper">
+          <canvas #salesChart></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-5">
+      <div class="glass-card chart-card">
+        <h6 class="mb-3">Most Sold Products</h6>
+        <div class="chart-wrapper chart-wrapper-bar">
+          <canvas #topProductsChart></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

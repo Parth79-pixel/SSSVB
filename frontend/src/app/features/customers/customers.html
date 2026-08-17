@@ -1,0 +1,102 @@
+<h2 class="section-title mb-4">👥 Customer Management</h2>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-4">
+    <div class="stat-card">
+      <h3>{{ stats.total_customers }}</h3>
+      <p>Total Clients</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-8">
+    <div class="stat-card">
+      <h3 class="text-truncate">{{ stats.top_spender_name || 'No Data' }}</h3>
+      <p>Top Spender</p>
+    </div>
+  </div>
+</div>
+
+<div class="form-section mb-4">
+  <h4 class="mb-3 sub-title">➕ Add New Customer</h4>
+  <form [formGroup]="addForm" (ngSubmit)="onAddSubmit()" class="row g-3">
+    <div class="col-12 col-md-6 col-lg-4">
+      <input type="text" class="form-control" formControlName="customer_name" placeholder="Full Name" />
+    </div>
+    <div class="col-6 col-md-6 col-lg-4">
+      <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile Number" />
+    </div>
+    <div class="col-6 col-md-6 col-lg-3">
+      <input type="email" class="form-control" formControlName="email" placeholder="Email (Optional)" />
+    </div>
+    <div class="col-12 col-lg-1">
+      <button type="submit" class="btn btn-gold-gradient w-100" [disabled]="isSubmittingAdd">
+        {{ isSubmittingAdd ? '...' : 'Save' }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="table-section">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <h5 class="mb-0">Registered Clients</h5>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table customer-table align-middle">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Contact Details</th>
+          <th>Join Date</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of customers">
+          <td class="fw-semibold text-white">{{ c.customer_name }}</td>
+          <td>
+            <div>{{ c.mobile }}</div>
+            <div class="small text-muted-custom">{{ c.email }}</div>
+          </td>
+          <td class="text-muted-custom">{{ c.created_at | date: 'd MMM y' }}</td>
+          <td class="text-end text-nowrap">
+            <a [href]="whatsappLink(c.mobile)" target="_blank" class="btn wa-btn btn-sm me-1">WA</a>
+            <button class="btn edit-btn btn-sm me-1" (click)="openEdit(c)">Edit</button>
+            <button class="btn delete-btn btn-sm" (click)="confirmDelete(c)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && customers.length === 0">
+          <td colspan="4" class="text-center text-muted-custom py-4">No customers found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="edit-overlay" *ngIf="editingCustomer" (click)="closeEdit()"></div>
+<div class="edit-panel" [class.active]="editingCustomer">
+  <div class="edit-content" *ngIf="editingCustomer">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="mb-0">✏️ Edit Customer</h5>
+      <button class="btn close-edit" (click)="closeEdit()">✕</button>
+    </div>
+    <form [formGroup]="editForm" (ngSubmit)="onEditSubmit()" class="d-flex flex-column gap-3">
+      <input type="text" class="form-control" formControlName="customer_name" placeholder="Full Name" />
+      <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile Number" />
+      <input type="email" class="form-control" formControlName="email" placeholder="Email Address" />
+      <button type="submit" class="btn btn-gold-gradient">Update Client</button>
+      <button type="button" class="btn cancel-btn" (click)="closeEdit()">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<div class="delete-modal" [class.active]="deleteTarget">
+  <div class="delete-modal-content" *ngIf="deleteTarget as c">
+    <div class="fs-1 mb-2">⚠️</div>
+    <h3>Remove Customer?</h3>
+    <p>Are you sure you want to delete <strong class="text-white">{{ c.customer_name }}</strong>?</p>
+    <div class="d-flex justify-content-center gap-3">
+      <button class="btn cancel-btn" (click)="cancelDelete()">Cancel</button>
+      <button class="btn confirm-btn" (click)="onConfirmDelete()">Yes, Delete</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<div *ngIf="loading" class="text-center py-5">Loading invoice...</div>
+
+<div *ngIf="!loading && errorMessage" class="text-center py-5 text-danger">
+  {{ errorMessage }}
+</div>
+
+<div class="container" *ngIf="!loading && invoice as inv">
+  <div class="row no-print mt-4">
+    <div class="col-12 text-center">
+      <button class="btn print-btn px-5 py-2 shadow-sm" (click)="print()">
+        🖨️ PRINT / SAVE AS PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-11">
+      <div class="invoice-card" *ngIf="shop as shop">
+        <div class="row align-items-center gold-border pb-3 mb-4">
+          <div class="col-md-8 d-flex align-items-center">
+            <img src="images/logo-png.png" alt="Logo" class="me-3 shop-logo" />
+            <div>
+              <h2 class="text-gold mb-0 fw-bold shop-title">{{ shop.shop_name }}</h2>
+              <p class="text-muted small mb-0">
+                {{ shop.address }} | 📞 {{ shop.phone }}
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 text-md-end">
+            <h4 class="mb-0">#{{ shop.invoice_prefix }}{{ inv.id }}</h4>
+            <p class="text-muted small mb-0">Date: {{ inv.created_at | date: 'dd-MM-yyyy' }}</p>
+            <div class="mt-2">
+              <span class="badge" [class.bg-success]="inv.status === 'Paid'" [class.bg-danger]="inv.status !== 'Paid'">
+                {{ inv.status }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-12">
+            <p class="text-uppercase text-gold fw-bold small mb-1">Customer Details</p>
+            <h5 class="mb-0 text-dark">{{ inv.customer_name }}</h5>
+            <p class="text-muted mb-0">{{ inv.customer_mobile }}</p>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover border-top">
+            <thead>
+              <tr>
+                <th class="ps-0">Description</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Qty</th>
+                <th class="text-end pe-0">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of inv.items">
+                <td class="ps-0 py-3">{{ item.product_name }}</td>
+                <td class="text-center py-3">₹{{ item.price_per_unit | number: '1.2-2' }}</td>
+                <td class="text-center py-3">{{ item.quantity }}</td>
+                <td class="text-end pe-0 py-3 fw-bold">₹{{ item.item_total | number: '1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row justify-content-between mt-2">
+          <div class="col-md-5">
+            <div class="payment-box">
+              <p class="text-uppercase text-gold fw-bold small mb-2">Payment Breakdown</p>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="small text-muted">Amount Paid:</span>
+                <span class="small fw-bold text-success">₹{{ inv.amount_paid | number: '1.2-2' }}</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="small text-muted">Balance Due:</span>
+                <span class="small fw-bold text-danger">₹{{ inv.balance_due | number: '1.2-2' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5">
+            <div class="d-flex justify-content-between py-2">
+              <span class="text-muted">Subtotal:</span>
+              <span class="fw-semibold">₹{{ getSubtotal() | number: '1.2-2' }}</span>
+            </div>
+            <div class="d-flex justify-content-between py-2 border-bottom">
+              <span class="text-muted">Discount:</span>
+              <span class="text-danger">(-₹{{ inv.discount | number: '1.2-2' }})</span>
+            </div>
+            <div class="d-flex justify-content-between py-3 fw-bold h3 text-gold">
+              <span>Grand Total:</span>
+              <span>₹{{ inv.final_amount | number: '1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-5 pt-3">
+          <div class="col-12 text-center border-top pt-4">
+            <p class="fw-bold mb-1 text-dark">Thank you for shopping with {{ shop.shop_name }}!</p>
+            <p class="small text-muted mb-0">
+              Note: This is a computer-generated invoice and does not require a physical signature.
+            </p>
+          </div>
+          <div class="text-center mt-4">
+            <p class="small text-muted footer-copy">© {{ inv.created_at | date: 'yyyy' }} {{ shop.shop_name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

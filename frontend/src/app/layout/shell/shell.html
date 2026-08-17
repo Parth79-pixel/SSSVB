@@ -1,0 +1,13 @@
+<div class="wrapper d-flex">
+  <div class="sidebar-backdrop d-lg-none" *ngIf="layout.sidebarOpen" (click)="layout.closeSidebar()"></div>
+  <aside class="sidebar" [class.sidebar-open]="layout.sidebarOpen">
+    <app-sidebar></app-sidebar>
+  </aside>
+
+  <main class="main flex-grow-1">
+    <app-header></app-header>
+    <div class="card content-card">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

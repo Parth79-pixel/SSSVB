@@ -1,0 +1,118 @@
+<div *ngIf="loading" class="text-center text-white-50 py-5">Loading dashboard...</div>
+
+<div *ngIf="!loading">
+  <div class="dashboard-header d-flex justify-content-between align-items-center flex-wrap mb-4">
+    <div>
+      <h2 class="mb-1">👋 Welcome back</h2>
+      <p class="text-muted-custom mb-0">Shri Sham Sundar Vastra Bhandar: Shop Performance Overview</p>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4" *ngIf="stats as s">
+    <div class="col-6 col-md-3">
+      <div class="stat-card stat-blue">
+        <div class="stat-label">Total Revenue (Cash)</div>
+        <div class="stat-value">₹{{ s.total_revenue | number: '1.2-2' }}</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card stat-orange">
+        <div class="stat-label">Pending Balance</div>
+        <div class="stat-value">₹{{ s.pending_amount | number: '1.2-2' }}</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card stat-purple">
+        <div class="stat-label">Invoices</div>
+        <div class="stat-value">{{ s.total_invoices }}</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card stat-red">
+        <div class="stat-label">Low Stock</div>
+        <div class="stat-value">{{ s.low_stock_count }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-7">
+      <div class="glass-panel h-100">
+        <h5 class="mb-3">Latest Activity</h5>
+        <div class="table-responsive">
+          <table class="table table-borderless align-middle mb-0">
+            <thead>
+              <tr class="table-head-row">
+                <th>Inv #</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th class="text-end">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let inv of recentInvoices">
+                <td>#{{ inv.id }}</td>
+                <td>{{ inv.customer_name }}</td>
+                <td>
+                  <span class="badge-partial" *ngIf="inv.balance_due > 0">
+                    Partial: ₹{{ inv.balance_due | number: '1.2-2' }} Left
+                  </span>
+                  <span class="badge-paid" *ngIf="inv.balance_due <= 0"> Paid </span>
+                </td>
+                <td class="text-end fw-bold text-gold">
+                  ₹{{ inv.final_amount | number: '1.2-2' }}
+                </td>
+              </tr>
+              <tr *ngIf="recentInvoices.length === 0">
+                <td colspan="4" class="text-center text-muted-custom py-4">No invoices yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <div class="d-flex flex-column gap-3">
+        <div class="glass-panel" *ngIf="stats as s">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-5">⚠️</span>
+            <h6 class="mb-0 text-danger-custom">Inventory Alerts</h6>
+          </div>
+          <div *ngIf="s.low_stock_count > 0">
+            <p class="mb-2">
+              Critical: <strong>{{ s.low_stock_count }}</strong> products are below the minimum
+              stock threshold (5 units).
+            </p>
+            <a routerLink="/products" class="text-gold small">View Inventory →</a>
+          </div>
+          <p *ngIf="s.low_stock_count === 0" class="text-muted-custom fst-italic mb-0">
+            All product stocks are healthy.
+          </p>
+        </div>
+
+        <div class="glass-panel">
+          <h6 class="mb-3">➕ Add Category</h6>
+          <form (ngSubmit)="onAddCategory()" class="d-flex gap-2">
+            <input
+              type="text"
+              class="form-control category-input"
+              placeholder="e.g. Poshak, Jhula..."
+              name="newCategoryName"
+              [(ngModel)]="newCategoryName"
+            />
+            <button
+              type="submit"
+              class="btn btn-gold-gradient category-submit-btn"
+              [disabled]="isAddingCategory"
+            >
+              {{ isAddingCategory ? '...' : 'Add' }}
+            </button>
+          </form>
+          <p class="category-success mt-2 mb-0" *ngIf="categoryMessage">{{ categoryMessage }}</p>
+          <p class="category-error mt-2 mb-0" *ngIf="categoryError">{{ categoryError }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

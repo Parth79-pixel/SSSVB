@@ -1,0 +1,117 @@
+.login-page {
+  background: url('/images/peacock-bg.webp') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+.login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 0;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  border-radius: 25px;
+  background: rgba(8, 32, 44, 0.88);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.8),
+    inset 0 0 25px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: white;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+}
+
+.login-logo {
+  width: 120px;
+  height: 120px;
+  max-width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: 10px;
+  background: #000;
+  border: 4px solid var(--gold);
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.7);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--gold-light);
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.form-label {
+  font-size: 13px;
+  color: #ddd;
+  text-align: left;
+  display: block;
+}
+
+.form-control {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 12px;
+}
+
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+  color: white;
+}
+
+.input-group .eye-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+  color: var(--gold-light);
+}
+
+.form-check-label {
+  font-size: 13px;
+  color: #ccc;
+}
+
+.btn-login {
+  background: linear-gradient(45deg, var(--gold), var(--gold-light));
+  color: black;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+}
+
+.error-msg {
+  font-size: 13px;
+  color: var(--danger);
+  background: rgba(255, 107, 107, 0.1);
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.footer {
+  font-size: 11px;
+  color: #888;
+}
+
+@media (max-width: 375px) {
+  .login-card {
+    padding: 1.5rem !important;
+  }
+}

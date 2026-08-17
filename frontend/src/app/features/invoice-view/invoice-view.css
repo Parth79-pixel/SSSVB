@@ -1,0 +1,178 @@
+:host {
+  display: block;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #212529;
+}
+
+.invoice-card {
+  background: #fff;
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.gold-border {
+  border-bottom: 3px solid var(--gold, #d4af37);
+}
+.text-gold {
+  color: var(--gold, #d4af37) !important;
+}
+
+.shop-logo {
+  max-width: 70px;
+  height: auto;
+}
+
+.shop-title {
+  font-size: calc(1.1rem + 0.7vw);
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+/* Table text was inheriting a faint Bootstrap default - force it dark and readable */
+.table {
+  --bs-table-color: #212529;
+  --bs-table-bg: #fff;
+  --bs-table-striped-color: #212529;
+  --bs-table-hover-color: #212529;
+  --bs-table-border-color: #dee2e6;
+  color: #212529;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  color: #495057;
+}
+
+.table tbody td {
+  color: #212529 !important;
+}
+
+.payment-box {
+  background: #fcfaf2;
+  border-left: 4px solid var(--gold, #d4af37);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.print-btn {
+  background-color: var(--gold, #d4af37);
+  border: none;
+  color: white;
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+.footer-copy {
+  font-size: 10px;
+}
+
+/* ===== Responsive breakpoints ===== */
+
+/* Tablets */
+@media (max-width: 991.98px) {
+  .invoice-card {
+    padding: 28px;
+  }
+
+  .shop-title {
+    font-size: 1.4rem;
+    white-space: normal;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 767.98px) {
+  .invoice-card {
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 8px;
+  }
+
+  .shop-logo {
+    max-width: 50px;
+  }
+
+  .shop-title {
+    font-size: 1.15rem;
+  }
+
+  /* Header row: logo/name block and invoice-number block stack instead of side by side */
+  .gold-border .col-md-8,
+  .gold-border .col-md-4 {
+    text-align: left !important;
+    margin-bottom: 10px;
+  }
+
+  /* Totals section: subtotal/discount/grand-total block and payment-breakdown
+     block stack full-width instead of sitting side by side */
+  .row.justify-content-between > .col-md-5 {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .table thead th,
+  .table tbody td {
+    font-size: 0.8rem;
+    padding: 8px 6px;
+  }
+
+  .py-3 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  .h3 {
+    font-size: 1.3rem;
+  }
+
+  .print-btn {
+    width: 100%;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+  .invoice-card {
+    padding: 14px;
+  }
+
+  .table thead th,
+  .table tbody td {
+    font-size: 0.72rem;
+    padding: 6px 4px;
+  }
+}
+
+@media print {
+  :host {
+    background: white !important;
+    padding: 0 !important;
+  }
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .invoice-card {
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    padding: 20px !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .shop-title {
+    font-size: 22pt !important;
+  }
+}

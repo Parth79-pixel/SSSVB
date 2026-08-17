@@ -1,0 +1,47 @@
+.topbar {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.topbar h3 {
+  color: var(--gold-light);
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 480px) {
+  .topbar h3 {
+    font-size: 0.95rem;
+  }
+}
+
+.hamburger-btn {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--gold-light);
+  border-radius: 8px;
+  font-size: 18px;
+  padding: 4px 10px;
+}
+
+.logout-btn {
+  background: linear-gradient(45deg, var(--gold), var(--gold-light));
+  color: black;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+}

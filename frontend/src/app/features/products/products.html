@@ -1,0 +1,147 @@
+<h2 class="section-title mb-4">📦 Product Management</h2>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-4">
+    <div class="stat-card">
+      <h3>{{ stats.total_products }}</h3>
+      <p>Total Products</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-4">
+    <div class="stat-card">
+      <h3>{{ stats.total_stock }}</h3>
+      <p>Total Stock</p>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="stat-card">
+      <h3>{{ stats.low_stock }}</h3>
+      <p>Low Stock Items</p>
+    </div>
+  </div>
+</div>
+
+<div class="form-section mb-4">
+  <form [formGroup]="addForm" (ngSubmit)="onAddSubmit()" class="row g-3 align-items-center">
+    <div class="col-12 col-md-6 col-lg-3">
+      <input type="text" class="form-control" formControlName="product_name" placeholder="Product Name" />
+    </div>
+
+    <div class="col-6 col-md-3 col-lg-2">
+      <select class="form-select" formControlName="category">
+        <option value="">Select Category</option>
+        <option *ngFor="let cat of categories" [value]="cat.category_name">
+          {{ cat.category_name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-6 col-md-3 col-lg-2">
+      <div class="file-wrapper">
+        <label class="file-btn w-100 text-truncate">{{ imageFileName }}</label>
+        <input type="file" accept="image/*" (change)="onImageSelected($event)" />
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <input type="number" step="0.01" class="form-control" formControlName="price" placeholder="Price" />
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-1">
+      <input type="number" class="form-control px-2" formControlName="stock" placeholder="Stock" />
+    </div>
+
+    <div class="col-6 col-md-4 col-lg-2">
+      <select class="form-select px-2" formControlName="status">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-gold-gradient px-4" [disabled]="isSubmittingAdd">
+        {{ isSubmittingAdd ? 'Adding...' : 'Add Product' }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="table-section">
+  <div class="table-responsive">
+    <table class="table product-table align-middle">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of products">
+          <td>{{ p.id }}</td>
+          <td>
+            <img *ngIf="p.image" [src]="imageBaseUrl + '/' + p.image" class="product-img" alt="" />
+            <span *ngIf="!p.image" class="text-muted-custom">No Image</span>
+          </td>
+          <td>{{ p.product_name }}</td>
+          <td>{{ p.category }}</td>
+          <td>₹ {{ p.price }}</td>
+          <td>
+            <span class="stock-badge" [class.low]="p.stock < 5" [class.ok]="p.stock >= 5">
+              {{ p.stock }}
+            </span>
+          </td>
+          <td>
+            <span [class.status-active]="p.status === 'active'" [class.status-inactive]="p.status !== 'active'">
+              {{ p.status === 'active' ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td class="text-nowrap">
+            <button class="btn edit-btn btn-sm me-1" (click)="openEdit(p)">Edit</button>
+            <button class="btn delete-btn btn-sm" (click)="confirmDelete(p.id)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="!loading && products.length === 0">
+          <td colspan="8" class="text-center text-muted-custom py-4">No products found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="edit-overlay" *ngIf="editingProduct" (click)="closeEdit()"></div>
+<div class="edit-panel" [class.active]="editingProduct">
+  <div class="edit-content" *ngIf="editingProduct as p">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="mb-0">Edit Product</h5>
+      <button class="btn close-edit" (click)="closeEdit()">✕</button>
+    </div>
+
+    <form [formGroup]="editForm" (ngSubmit)="onEditSubmit()" class="d-flex flex-column gap-3">
+      <input type="text" class="form-control" formControlName="product_name" placeholder="Product Name" />
+      <input type="number" step="0.01" class="form-control" formControlName="price" placeholder="Price" />
+      <input type="number" class="form-control" formControlName="stock" placeholder="Stock" />
+      <select class="form-select" formControlName="status">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+      <button type="submit" class="btn btn-gold-gradient">Save Changes</button>
+    </form>
+  </div>
+</div>
+
+<div class="delete-modal" [class.active]="deleteTargetId">
+  <div class="delete-modal-content" *ngIf="deleteTargetId">
+    <h3>🗑 Delete Product?</h3>
+    <p>This action cannot be undone.</p>
+    <div class="d-flex justify-content-center gap-3">
+      <button class="btn cancel-btn" (click)="cancelDelete()">Cancel</button>
+      <button class="btn confirm-btn" (click)="onConfirmDelete()">Yes, Delete</button>
+    </div>
+  </div>
+</div>

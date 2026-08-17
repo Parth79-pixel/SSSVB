@@ -1,0 +1,17 @@
+<div class="brand text-center mb-4">
+  <img src="images/logo-png.png" alt="Logo" class="brand-logo mb-2" />
+  <h2 class="brand-title">SSSVB</h2>
+</div>
+
+<ul class="nav flex-column">
+  <li class="nav-item" *ngFor="let item of navItems">
+    <a
+      class="nav-link"
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      (click)="onNavClick()"
+    >
+      <span class="me-2">{{ item.icon }}</span>{{ item.label }}
+    </a>
+  </li>
+</ul>

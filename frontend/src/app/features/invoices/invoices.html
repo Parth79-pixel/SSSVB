@@ -1,0 +1,151 @@
+<h2 class="section-title mb-4">🧾 Create New Invoice</h2>
+
+<div class="form-section">
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-6 col-lg-4">
+      <select class="form-select" [(ngModel)]="selectedCustomerId" (ngModelChange)="onCustomerChange()">
+        <option [ngValue]="null">Select Customer</option>
+        <option *ngFor="let c of customers" [ngValue]="c.id">{{ c.customer_name }}</option>
+      </select>
+    </div>
+    <div class="col-6 col-md-3 col-lg-4">
+      <input
+        type="text"
+        class="form-control readonly-field"
+        placeholder="Mobile Number"
+        [value]="selectedCustomerMobile || ''"
+        readonly
+      />
+    </div>
+    <div class="col-12 col-lg-4">
+      <select class="form-select" [(ngModel)]="status">
+        <option value="Paid">✅ Paid</option>
+        <option value="Unpaid">⏳ Unpaid</option>
+        <option value="Cancelled">❌ Cancelled</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table item-table align-middle">
+      <thead>
+        <tr>
+          <th style="width: 40%">Product</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let row of rows; let i = index">
+          <tr>
+            <td>
+              <select
+                class="form-select"
+                [ngModel]="row.product_id"
+                (ngModelChange)="onProductSelected(i, $event)"
+              >
+                <option [ngValue]="null">Select Product</option>
+                <option *ngFor="let p of activeProducts" [ngValue]="p.id">
+                  {{ p.product_name }} (ID: {{ p.id }})
+                </option>
+              </select>
+            </td>
+            <td>
+              <input type="number" class="form-control readonly-field" [value]="row.price" readonly />
+            </td>
+            <td>
+              <input
+                class="form-control"
+                [class.qty-warning]="row.stockWarning"
+                min="1"
+                [ngModel]="row.qty"
+                (ngModelChange)="onQtyChanged(i, $event)"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control readonly-field"
+                [value]="(row.price * row.qty).toFixed(2)"
+                readonly
+              />
+            </td>
+            <td>
+              <button type="button" class="btn remove-row-btn" (click)="removeRow(i)">✕</button>
+            </td>
+          </tr>
+          <tr *ngIf="row.stockWarning" class="warning-row">
+            <td colspan="5" class="stock-warning-text">⚠️ {{ row.stockWarning }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <button type="button" class="btn add-btn mt-2" (click)="addRow()">+ Add Item</button>
+
+  <div class="d-flex justify-content-end mt-4">
+    <div class="summary-box">
+      <div class="d-flex justify-content-between mb-2">
+        <span class="text-muted-custom">Subtotal:</span>
+        <span class="text-white">₹ {{ getSubtotal() | number: '1.2-2' }}</span>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="text-muted-custom">Discount:</span>
+        <input
+          type="number"
+          class="form-control summary-input"
+          [(ngModel)]="discount"
+          (ngModelChange)="onDiscountOrPaidChanged()"
+        />
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center py-2 grand-total-row">
+        <span class="text-white fw-bold">Grand Total:</span>
+        <span class="grand-total-value">₹ {{ getGrandTotal() | number: '1.2-2' }}</span>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
+        <span class="text-success-custom fw-semibold">Amount Paid:</span>
+        <input
+          type="number"
+          step="0.01"
+          class="form-control summary-input paid-input"
+          [(ngModel)]="amountPaid"
+          (ngModelChange)="onDiscountOrPaidChanged()"
+        />
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-danger-custom fw-semibold">Balance Due:</span>
+        <span class="balance-value">₹ {{ getBalanceDue() | number: '1.2-2' }}</span>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-gold-gradient w-100 py-2"
+        [disabled]="isSubmitting"
+        (click)="onSubmit()"
+      >
+        {{ isSubmitting ? 'Saving...' : 'Generate & Save Invoice' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="error-toast" *ngIf="errorMessage">{{ errorMessage }}</div>
+</div>
+
+<div class="success-modal" [class.active]="successInvoiceId">
+  <div class="success-modal-content" *ngIf="successInvoiceId as id">
+    <div class="success-icon">✓</div>
+    <h3>Invoice Generated!</h3>
+    <p>Invoice #{{ id }} saved successfully.</p>
+    <div class="d-flex justify-content-center gap-3">
+      <button class="btn confirm-btn" (click)="resetForNewInvoice()">Done</button>
+      <button class="btn cancel-btn" (click)="printInvoice()">🖨️ Print</button>
+    </div>
+  </div>
+</div>
