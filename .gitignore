@@ -1,0 +1,15 @@
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/.env
+backend/static/products/*
+!backend/static/products/.gitkeep
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# OS files
+.DS_Store
+Thumbs.db
