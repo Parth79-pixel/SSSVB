@@ -1,4 +1,6 @@
+import os
 from pathlib import Path
+import cloudinary
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -52,6 +54,13 @@ app.include_router(settings_router.router)
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
+    # Configure Cloudinary globally when app starts
+    cloudinary.config(
+        cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+        api_key=os.getenv("CLOUDINARY_API_KEY"),
+        api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+        secure=True,
+    )
 
 
 @app.get("/")
