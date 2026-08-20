@@ -85,7 +85,8 @@
         <tr *ngFor="let p of products">
           <td>{{ p.id }}</td>
           <td>
-            <img *ngIf="p.image" [src]="imageBaseUrl + '/' + p.image" class="product-img" alt="" />
+            <!-- Bind directly to p.image since it contains the full Cloudinary HTTPS URL -->
+            <img *ngIf="p.image" [src]="p.image" class="product-img" alt="" />
             <span *ngIf="!p.image" class="text-muted-custom">No Image</span>
           </td>
           <td>{{ p.product_name }}</td>
